@@ -1,0 +1,107 @@
+<h5>Welcome, <%= current_user.first_name.capitalize %></h5>
+
+<!-- Events in our state -->
+<table class="table">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Date</th>
+      <th>Location</th>
+      <th>Host</th>
+      <th>Action/Status</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @events.each do |event| %>
+      <tr>
+        <td class="text-capitalize"><a href="<%=event_path event.id%>"><%= event.name %></a></td>
+        <td><%= event.date %></td>
+        <td class="text-capitalize"><%= event.city %></td>
+        <td class="text-capitalize"><%= event.user.first_name %></td>
+        <td>
+          <!-- Actions -->
+            <form action="<%= join_event_path %>" method="post">
+              <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+              <input type="hidden" name="event_id" value="<%= event.id %>">
+              <button type="btn btn-sm btn-primary" type="submit">Join</button>
+            </form>
+            <button class="btn btn-sm btn-danger"> <a href="<%= delete_event_path event.id %>" data-method="delete">Delete</a></button>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<!-- Events out of state -->
+<table class="table">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Date</th>
+      <th>Location</th>
+      <th>State</th>
+      <th>Host</th>
+      <th>Action/Status</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @out_of_state.each do |event| %>
+      <tr>
+        <td class="text-capitalize"><a href="<%= event_path event.id %>"><%= event.name %></a></td>
+        <td><%= event.date %></td>
+        <td class="text-capitalize"><%= event.city %></td>
+        <td><%= event.state.upcase %></td>
+        <td class="text-capitalize"><%= event.user.first_name %></td>
+        <td>
+          <!-- Actions -->
+          <!-- <form action="" method="post">
+            <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>">
+            <input type="hidden" name="event_id" value="<%= event.id %>">
+            <button type="btn btn-sm btn-primary" type="submit">Join</button>
+          </form> -->
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<div class="row">
+  <div class="col-sm-12">
+    <h4>Add Event</h4>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-sm-2"></div>
+  <div class="col-sm-8">
+    <form class="" action= "<%= create_event_path %>" method="post">
+      <input type="hidden" name="authenticity_token" value="<%= form_authenticity_token %>"/>
+      <!-- name -->
+      <div class="form-group">
+        <input type="text" name="event[name]"class="form-control" id="name" placeholder="Name"/>
+      </div>
+      <!-- Date -->
+      <div class="form-group">
+        <input type="date" name="event[date]"class="form-control" id="date" placeholder="Date"/>
+      </div>
+      <!-- Location -->
+      <div class="form-group">
+        <div class="row">
+          <div class="col-sm-8">
+            <input type="text" name="event[city]"class="form-control" id="city" placeholder="City">
+          </div>
+          <div class="col-sm-4">
+            <input type="text" name="event[state]"class="form-control" id="state" placeholder="State">
+          </div>
+
+        </div>
+      </div>
+      <!-- Submit -->
+      <div class="form-group">
+        <button class="btn btn-success" type="submit">Add Event</button>
+
+      </div>
+
+    </form>
+  </div>
+  <div class="col-sm-2"></div>
+
+</div>

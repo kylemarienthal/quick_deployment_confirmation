@@ -1,0 +1,23 @@
+<h5><%= @event.name %></h5>
+<p class="text-capitalize">Host: <%= @event.user.first_name %></p>
+<p>Date: <%= @event.date %></p>
+<p class="text-capitalize">Location: <%= @event.city %>, <%= @event.state.upcase %></p>
+<p>People who are joining the event: <%= @event.attendees.count %></p>
+<table class="table">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Location</th>
+      <th>State</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @event.attendees.each do |user| %>
+      <tr class="text-capitalize">
+        <td><%= user.first_name %> <%= user.last_name %></td>
+        <td><%= user.city %></td>
+        <td><%= user.state.upcase %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
